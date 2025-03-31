@@ -1,0 +1,132 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(#615DAD, #F6C2D7);
+  color: #ffffff;
+}
+
+p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.game {
+  width: 75vmin;
+}
+
+.game__title {
+  font-family: "Lobster", sans-serif;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.game__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game__menu {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.game__player {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.game__symbol {
+  width: 1rem;
+  height: 1rem;
+  border: 0.12rem solid white;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.game__board {
+  background: linear-gradient(#B1A9D3, #F8DAE7);
+}
+
+.game__board-row {
+  display: flex;
+}
+
+.game__board-button {
+  width: calc(100% / 10);
+  aspect-ratio: 1 / 1;
+  background-color: transparent;
+  border-bottom: 0.5px solid #283E50;
+  border-left: 0.5px solid #283E50;
+  border-right: none;
+  border-top: 0.5px solid #283E50;
+  cursor: pointer;
+  padding: 0;
+}
+
+.game__board-button:hover,
+.game__board-button:focus {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.game__board .game__board-row:nth-child(1n) button {
+  border-bottom: none;
+}
+
+.game__board .game__board-row:last-child button {
+  border-bottom: 0.5px solid #283E50;
+}
+
+.game__board-row button:last-child {
+  border-right: 0.5px solid #283E50;
+}
+
+.game__icons {
+  display: flex;
+  height: 100%;
+  gap: 0.5rem;
+}
+
+.game__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+}
+
+.game__icon img {
+  width: 1rem;
+  height: 1rem;
+}
+
+.game__icon--home {
+  background-color: #1fcca4;
+}
+
+.game__icon--home:hover,
+.game__icon--home:focus {
+  background-color: #1cbb96;
+}
+
+.game__icon--restart {
+  background-color: #0197f6;
+}
+
+.game__icon--restart:hover,
+.game__icon--restart:focus {
+  background-color: #0090e9;
+}
