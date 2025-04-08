@@ -10,15 +10,15 @@
       href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles/game.css" />
+    <link rel="stylesheet" href="styles/style.css" />
   </head>
   <body>
     <div class="game">
       <div class="game__header">
         <h1 class="game__title">Piškvorky</h1>
-        <div class="game__menu">
+        <nav class="game__menu">
           <div class="game__player">
-            <p>HRAJE:</p>
+            <p class="game__status">HRAJE:</p>
             <div class="game__symbol game__symbol--circle"></div>
           </div>
           <div class="game__icons">
@@ -26,10 +26,10 @@
               <img src="img/home.svg" alt="home icon" />
             </a>
             <a href="hra.html" class="game__icon game__icon--restart">
-              <img src="img/restart.svg" alt="home icon" />
+              <img src="img/restart.svg" alt="restart icon" />
             </a>
           </div>
-        </div>
+        </nav>
       </div>
       <div class="game__board">
         <div class="game__board-row">

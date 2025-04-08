@@ -9,11 +9,89 @@ body {
   align-content: center;
   justify-content: center;
   height: 100vh;
-  background: linear-gradient(#615DAD, #F6C2D7);
+  background: linear-gradient(#615dad, #ffc8da);
   color: #ffffff;
 }
 
-p {
+
+/* Intro page */
+.intro-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60vmin;
+  background-color: #283e50;
+  border-radius: 7px 7px 0 0;
+}
+
+.intro-card__img {
+  flex: 1;
+  width: 100%;
+  border-radius: 7px 7px 0 0;
+}
+
+.intro-card__title {
+  font-family: "Lobster", sans-serif;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 400;
+  padding: 0.5rem;
+}
+
+.intro-card__info {
+  display: flex;
+  flex-shrink: 1;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  text-align: center;
+  line-height: 1.5;
+  padding: 0 0.5rem 0.5rem 0.5rem;
+}
+
+.intro-card__btns {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 6rem;
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.intro-card__btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Half of parent space for a button plus space between them. */
+  height: calc((100% / 2) - 1%);
+  width: 100%;
+  padding: 0.5rem 0 0.5rem 0;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.intro-card__btn--rules {
+  background-color: #1fcca4;
+}
+
+.intro-card__btn--rules:hover {
+  background-color: #1cbb96;
+}
+
+.intro-card__btn--play {
+  background-color: #0197f6;
+}
+
+.intro-card__btn--play:hover {
+  background-color: #0090e9;
+}
+
+/* Game board */
+
+.game__status {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1rem;
   font-weight: 600;
