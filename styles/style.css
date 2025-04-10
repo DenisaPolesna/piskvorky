@@ -91,14 +91,14 @@ body {
 
 /* Game board */
 
+.game {
+  width: 75vmin;
+}
+
 .game__status {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1rem;
   font-weight: 600;
-}
-
-.game {
-  width: 75vmin;
 }
 
 .game__title {
@@ -127,14 +127,6 @@ body {
   gap: 0.3rem;
 }
 
-.game__symbol {
-  width: 1rem;
-  height: 1rem;
-  border: 0.12rem solid white;
-  border-radius: 50%;
-  background-color: transparent;
-}
-
 .game__board {
   background: linear-gradient(#B1A9D3, #F8DAE7);
 }
@@ -144,6 +136,7 @@ body {
 }
 
 .game__board-button {
+  position: relative;
   width: calc(100% / 10);
   aspect-ratio: 1 / 1;
   background-color: transparent;
@@ -158,6 +151,10 @@ body {
 .game__board-button:hover,
 .game__board-button:focus {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.game__board-button:disabled:hover {
+  background-color: initial;
 }
 
 .game__board .game__board-row:nth-child(1n) button {
@@ -207,4 +204,57 @@ body {
 .game__icon--restart:hover,
 .game__icon--restart:focus {
   background-color: #0090e9;
+}
+
+/* Symbol displayed in the navigation bar */
+.game__symbol {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* Circle displayed in the navigation bar */
+.game__symbol--circle {
+  background-image: url('../img/circle.svg');
+}
+
+/* Cross displayed in the navigation bar */
+.game__symbol--cross {
+  background-image: url('../img/cross.svg');
+}
+
+/* Symbol displayed in the field */
+.game__board-field::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 80%;
+  background-size: 80% 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: growSymbol 0.15s ease-out forwards;
+}
+
+@keyframes growSymbol {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Circle displayed in the field */
+.game__board-field--circle::before {
+  background-image: url('../img/circle_grey.svg');
+}
+
+/* Cross displayed in the field */
+.game__board-field--cross::before {
+  background-image: url('../img/cross_grey.svg');
 }
