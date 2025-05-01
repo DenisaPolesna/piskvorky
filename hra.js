@@ -1,31 +1,87 @@
-const CIRCLE = "circle";
-const CROSS = "cross";
+import { findWinner } from "./findWinner.js";
 
-let currentPlayer = CIRCLE;
-const currentPlayerSymbol = document.querySelector(".game__symbol");
-currentPlayerSymbol.classList.add("game__symbol--circle");
-const gameBoard = document.querySelector(".game__board");
-const restarBtn = document.querySelector(".game__icon--restart");
+const CIRCLE_STR = "circle";
+const CIRCLE_SYMBOL = "o";
+const CROSS_STR = "cross";
+const CROSS_SYMBOL = "x";
+const EMPTY_SYMBOL = "_";
 
-const drawAndSwitchSymbol = (field, currentSymbol, nextSymbol) => {
-  field.classList.add("game__board-field");
-  field.classList.add(`game__board-field--${currentSymbol}`);
-  currentPlayerSymbol.classList.toggle(`game__symbol--${currentSymbol}`);
-  currentPlayerSymbol.classList.toggle(`game__symbol--${nextSymbol}`);
-  currentPlayer = nextSymbol;
+let currentPlayerSymbol = CIRCLE_STR;
+const currentPlayerSymbolEl = document.querySelector(".game__symbol");
+currentPlayerSymbolEl.classList.add(`game__symbol--${currentPlayerSymbol}`);
+const gameBoardEl = document.querySelector(".game__board");
+const restartBtnEl = document.querySelector(".game__icon--restart");
+const tilesEl = document.querySelectorAll(".game__board-button");
+
+// Collects all symbols from the game board into a single array
+const createGameBoard = () => {
+  const gameBoard = Array.from(tilesEl).map((tile) => {
+    const tileClasses = Array.from(tile.classList);
+    if (tileClasses.some((tileClass) => tileClass.includes(CROSS_STR))) {
+      return CROSS_SYMBOL;
+    } else if (
+      tileClasses.some((tileClass) => tileClass.includes(CIRCLE_STR))
+    ) {
+      return CIRCLE_SYMBOL;
+    } else {
+      return EMPTY_SYMBOL;
+    }
+  });
+  return gameBoard;
 };
 
-const onFieldClick = (event) => {
-  const field = event.target;
-  // Prevent symbol creation if the button is disabled or the clicked element is a <div>
-  if (field.disabled || field instanceof HTMLDivElement) return;
+const disableAllTiles = () => {
+  tilesEl.forEach((tile) => {
+    tile.disabled = true;
+  });
+};
 
-  if (currentPlayer === CIRCLE) {
-    drawAndSwitchSymbol(field, CIRCLE, CROSS);
-  } else {
-    drawAndSwitchSymbol(field, CROSS, CIRCLE);
+const playAgain = () => {
+  const okBtnPressed = confirm("Chceš začít znovu?");
+  if (okBtnPressed) location.reload();
+};
+
+const checkWinner = (tileEl) => {
+  const gameBoard = createGameBoard();
+  const winner = findWinner(gameBoard, tileEl, tilesEl);
+
+  if (winner === CIRCLE_SYMBOL || winner === CROSS_SYMBOL) {
+    disableAllTiles();
+    setTimeout(() => {
+      alert(`Vyhrál hráč se symbolem ${winner}.`);
+      playAgain();
+    }, 300);
+    return;
   }
-  field.disabled = true;
+  if (winner === "tie") {
+    setTimeout(() => {
+      alert(`Hra skončila remízou.`);
+      playAgain();
+    }, 300);
+  }
+};
+
+const drawAndSwitchSymbol = (tile, currentSymbol, nextSymbol) => {
+  tile.classList.add("game__board-tile");
+  tile.classList.add(`game__board-tile--${currentSymbol}`);
+  currentPlayerSymbolEl.classList.toggle(`game__symbol--${currentSymbol}`);
+  currentPlayerSymbolEl.classList.toggle(`game__symbol--${nextSymbol}`);
+  currentPlayerSymbol = nextSymbol;
+};
+
+// Renders a symbol (x or o), disables the tile, and checks for a winner
+const onTileClick = (event) => {
+  const tileEl = event.target;
+  // Prevent symbol creation if the button is disabled or the clicked element is a <div>
+  if (tileEl.disabled || tileEl instanceof HTMLDivElement) return;
+
+  if (currentPlayerSymbol === CIRCLE_STR) {
+    drawAndSwitchSymbol(tileEl, CIRCLE_STR, CROSS_STR);
+  } else {
+    drawAndSwitchSymbol(tileEl, CROSS_STR, CIRCLE_STR);
+  }
+  tileEl.disabled = true;
+  checkWinner(tileEl);
 };
 
 const onRestartBtnClick = (event) => {
@@ -33,5 +89,5 @@ const onRestartBtnClick = (event) => {
   if (!okBtnPressed) event.preventDefault();
 };
 
-gameBoard.addEventListener("click", onFieldClick);
-restarBtn.addEventListener("click", onRestartBtnClick);
+gameBoardEl.addEventListener("click", onTileClick);
+restartBtnEl.addEventListener("click", onRestartBtnClick);

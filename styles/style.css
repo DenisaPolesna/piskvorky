@@ -225,8 +225,8 @@ body {
   background-image: url('../img/cross.svg');
 }
 
-/* Symbol displayed in the field */
-.game__board-field::before {
+/* Symbol displayed in the tile */
+.game__board-tile::before {
   content: "";
   position: absolute;
   top: 50%;
@@ -249,12 +249,12 @@ body {
   }
 }
 
-/* Circle displayed in the field */
-.game__board-field--circle::before {
+/* Circle displayed in the tile */
+.game__board-tile--circle::before {
   background-image: url('../img/circle_grey.svg');
 }
 
-/* Cross displayed in the field */
-.game__board-field--cross::before {
+/* Cross displayed in the tile */
+.game__board-tile--cross::before {
   background-image: url('../img/cross_grey.svg');
 }
