@@ -36,6 +36,15 @@ const disableAllTiles = () => {
   });
 };
 
+const enablePlayableTiles = () => {
+  const gameBoard = createGameBoard();
+  gameBoard.forEach((board, index) => {
+    if (board === EMPTY_SYMBOL) {
+      tilesEl[index].disabled = false;
+    }
+  });
+};
+
 const playAgain = () => {
   const okBtnPressed = confirm("Chceš začít znovu?");
   if (okBtnPressed) location.reload();
@@ -70,8 +79,8 @@ const drawAndSwitchSymbol = (tile, currentSymbol, nextSymbol) => {
 };
 
 // Renders a symbol (x or o), disables the tile, and checks for a winner
-const onTileClick = (event) => {
-  const tileEl = event.target;
+let isPlayerAI = false;
+const onTileClick = (tileEl) => {
   // Prevent symbol creation if the button is disabled or the clicked element is a <div>
   if (tileEl.disabled || tileEl instanceof HTMLDivElement) return;
 
@@ -82,6 +91,10 @@ const onTileClick = (event) => {
   }
   tileEl.disabled = true;
   checkWinner(tileEl);
+  if (!isPlayerAI) {
+    isPlayerAI = true;
+    playAI(createGameBoard());
+  }
 };
 
 const onRestartBtnClick = (event) => {
@@ -89,5 +102,31 @@ const onRestartBtnClick = (event) => {
   if (!okBtnPressed) event.preventDefault();
 };
 
-gameBoardEl.addEventListener("click", onTileClick);
+const playAI = async (gameBoard) => {
+  disableAllTiles();
+  const response = await fetch(
+    "https://piskvorky.czechitas-podklady.cz/api/suggest-next-move",
+    {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        board: gameBoard,
+        player: "x",
+      }),
+    },
+  );
+
+  const data = await response.json();
+  const { x, y } = data.position;
+  const tile = tilesEl[x + y * 10];
+  enablePlayableTiles();
+  tile.click();
+  isPlayerAI = false;
+};
+
+gameBoardEl.addEventListener("click", (event) => {
+  onTileClick(event.target);
+});
 restartBtnEl.addEventListener("click", onRestartBtnClick);

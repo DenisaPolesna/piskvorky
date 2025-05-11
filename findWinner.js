@@ -53,10 +53,7 @@ const getDiagonalEnd = (diagonalStart, symbolIndex) => {
 };
 
 const getRowIndex = (tileIndex) => {
-  let rowIndex = null;
-  rowIndex = tileIndex < TILES_PER_ROW ? "0" + tileIndex : String(tileIndex);
-  rowIndex = Number(rowIndex[0]);
-  return rowIndex;
+  return Math.floor(tileIndex / TILES_PER_ROW);
 };
 
 const getDiagonalBounds = (tileIndex) => {
